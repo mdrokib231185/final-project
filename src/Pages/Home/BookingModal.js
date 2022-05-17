@@ -1,15 +1,52 @@
 import React from "react";
 import { format } from "date-fns";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { toast } from "react-toastify";
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
-  const { slots, name } = treatment;
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
+  const {_id, slots, name } = treatment;
+  const [user, loading, error] = useAuthState(auth);
 
   // console.log(slots);
   const handelBooking = (event) => {
     event.preventDefault();
     const slot = event.target.slot.value;
-    console.log(slot, name, slot);
-    setTreatment(null);
+    const formateDate = format(date, "PP")
+    const booking ={
+      treatmentId: _id,
+      treatment: name,
+      date: formateDate,
+      slot,
+      patient: user.email,
+      patientName: user.displayName,
+      phone: event.target.value
+    }
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          toast(`Appointment is set, ${formateDate} at ${slot}`)
+        }
+        else {
+          toast.warning(
+            `Already appointment on ${data.booking?.date} at ${data.booking?.date}`
+          );
+        }
+        refetch()
+        setTreatment(null);
+      });
+    
+   
+
+
   };
   return (
     <div>
@@ -45,13 +82,13 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             </select>
             <input
               type="text"
-              placeholder="Type Your name"
+              disabled value={user?.displayName}
               name="name"
               className="input input-bordered w-full max-w-xs"
             />
             <input
               type="email"
-              placeholder="Type Your Email"
+              disabled value={user?.email}
               name="email"
               className="input input-bordered w-full max-w-xs"
             />

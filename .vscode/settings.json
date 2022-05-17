@@ -1,0 +1,6 @@
+{
+      "editor.renderWhitespace": "trailing",
+      "editor.wordWrap": "on",
+      "editor.autoClosingQuotes": "always",
+      "editor.bracketPairColorization.independentColorPoolPerBracketType": true
+}
