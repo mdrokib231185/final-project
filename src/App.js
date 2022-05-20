@@ -9,12 +9,15 @@ import RequireAuth from "./Pages/Home/RequireAuth";
 import Navbar from "./Pages/Home/Shared/Navbar";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/Login/SignUp";
-  import { ToastContainer} from "react-toastify";
-  import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Myappointment from "./Pages/Dashboard/Myappointment";
 import MyReview from "./Pages/Dashboard/MyReview";
 import Myhistory from "./Pages/Dashboard/Myhistory";
+import User from "./Pages/Dashboard/User";
+import DoctorAdd from "./Pages/Dashboard/DoctorAdd";
+import ManageDoctors from "./Pages/Dashboard/ManageDoctors";
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/home" element={<Home></Home>}></Route>
         <Route path="/about" element={<About></About>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
@@ -44,7 +48,9 @@ function App() {
           <Route index element={<Myappointment></Myappointment>}></Route>
           <Route path="review" element={<MyReview></MyReview>}></Route>
           <Route path="myhistory" element={<Myhistory></Myhistory>}></Route>
-          {/* <Route path="history" element={<MyHistory></MyHistory>}></Route> */}
+          <Route path="user" element={<User></User>}></Route>
+          <Route path="addDoctor" element={<DoctorAdd></DoctorAdd>}></Route>
+          <Route path="manageDoctor" element={<ManageDoctors></ManageDoctors>}></Route>
         </Route>
       </Routes>
       <ToastContainer />
